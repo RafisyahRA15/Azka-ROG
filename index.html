@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panduan Jaringan Komputer - Kabel LAN & Sharing File</title>
+    <!-- Google Fonts & FontAwesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-deep: #050b14;
+            --bg-card: #0c1829;
+            --bg-card-hover: #12223a;
+            --accent-neon: #00f0ff;
+            --accent-glow: rgba(0, 240, 255, 0.2);
+            --secondary-neon: #7000ff;
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --border-color: rgba(0, 240, 255, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(112, 0, 255, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(0, 240, 255, 0.08) 0%, transparent 40%);
+        }
+
+        header {
+            background: linear-gradient(135deg, rgba(12, 24, 41, 0.9), rgba(5, 11, 20, 0.95));
+            border-bottom: 1px solid var(--border-color);
+            padding: 2.5rem 1rem;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .header-content h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 800;
+            font-size: 2.2rem;
+            letter-spacing: 2px;
+            background: linear-gradient(45deg, var(--accent-neon), #ffffff, var(--secondary-neon));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .identity-badge {
+            display: inline-block;
+            background: rgba(12, 24, 41, 0.8);
+            border: 1px solid var(--accent-neon);
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            margin-top: 1.5rem;
+            box-shadow: 0 0 20px var(--accent-glow);
+            text-align: left;
+            max-width: 600px;
+            width: 100%;
+        }
+
+        .identity-badge p {
+            margin: 0.3rem 0;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+        }
+
+        .identity-badge p span {
+            color: var(--accent-neon);
+            font-weight: 600;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: rgba(5, 11, 20, 0.9);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        nav a:hover, nav a.active {
+            color: var(--accent-neon);
+            background: rgba(0, 240, 255, 0.1);
+            box-shadow: 0 0 15px var(--accent-glow);
+        }
+
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        section {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2.5rem;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        section:hover {
+            border-color: rgba(0, 240, 255, 0.4);
+        }
+
+        h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.6rem;
+            color: var(--accent-neon);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        h3 {
+            font-size: 1.2rem;
+            color: #ffffff;
+            margin: 1.2rem 0 0.6rem 0;
+        }
+
+        p, li {
+            color: var(--text-muted);
+            line-height: 1.7;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        ul, ol {
+            padding-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        strong {
+            color: var(--text-main);
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .tool-card {
+            background: var(--bg-deep);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-neon);
+            box-shadow: 0 5px 20px var(--accent-glow);
+        }
+
+        .tool-card i {
+            font-size: 2.5rem;
+            color: var(--accent-neon);
+            margin-bottom: 1rem;
+        }
+
+        .tool-card h4 {
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin-top: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            background: var(--bg-deep);
+        }
+
+        th, td {
+            padding: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 0.95rem;
+        }
+
+        th {
+            background: rgba(0, 240, 255, 0.1);
+            color: var(--accent-neon);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+
+        tr:hover {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .command-box {
+            background: #020408;
+            border: 1px dashed var(--accent-neon);
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            font-family: 'Courier New', Courier, monospace;
+            color: var(--accent-neon);
+            display: block;
+            margin: 1rem 0;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.8);
+        }
+
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            background: #000;
+            margin-top: 1.5rem;
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        .presentation-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, var(--accent-neon), var(--secondary-neon));
+            color: #ffffff;
+            border: none;
+            padding: 0.8rem 1.8rem;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px var(--accent-glow);
+            font-size: 0.95rem;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 240, 255, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 1px solid var(--accent-neon);
+            color: var(--accent-neon);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(0, 240, 255, 0.1);
+        }
+
+        .iframe-container {
+            width: 100%;
+            height: 500px;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            margin-top: 1.5rem;
+            background: #ffffff;
+            display: none;
+        }
+
+        .iframe-container.active {
+            display: block;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background: var(--bg-card);
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        footer span {
+            color: var(--accent-neon);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-content">
+            <h1>JARINGAN KOMPUTER</h1>
+            <p>Panduan Praktikum & Modul Pembelajaran Profesional</p>
+            
+            <div class="identity-badge">
+                <p><i class="fa-solid fa-user-graduate"></i> Nama: <span>Rafisyah Azka</span></p>
+                <p><i class="fa-solid fa-id-card"></i> NIM: <span>062640723211</span></p>
+                <p><i class="fa-solid fa-chalkboard-user"></i> Kelas: <span>1-TIA</span></p>
+                <p><i class="fa-solid fa-book"></i> Mata Kuliah: <span>Jaringan Komputer</span></p>
+                <p><i class="fa-solid fa-chalkboard-teacher"></i> Dosen Pengampu: <span>Dr. Ali Firdaus, S.Kom., M.Kom</span></p>
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <a href="#alat">Alat & Bahan</a>
+        <a href="#cross">Kabel Cross</a>
+        <a href="#koneksi">Koneksi & IP</a>
+        <a href="#sharing">Sharing File</a>
+        <a href="#video">Video Live</a>
+        <a href="#presentasi">Presentasi PPT</a>
+    </nav>
+
+    <div class="main-container">
+
+        <section id="alat">
+            <h2><i class="fa-solid fa-toolbox"></i> Alat dan Bahan Perancangan Jaringan</h2>
+            <p>Sebelum memulai merangkai jaringan dan kabel, pastikan Anda telah menyiapkan perangkat keras berikut:</p>
+            
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <i class="fa-solid fa-network-wired"></i>
+                    <h4>Kabel UTP</h4>
+                    <p>Media transmisi data jaringan komputer yang terdiri dari 4 pasang kabel lilit.</p>
+                </div>
+                <div class="tool-card">
+                    <i class="fa-solid fa-plug"></i>
+                    <h4>Konektor RJ45</h4>
+                    <p>Kepala penghubung kabel UTP yang dipasangkan pada kedua ujung kabel.</p>
+                </div>
+                <div class="tool-card">
+                    <i class="fa-solid fa-scissors"></i>
+                    <h4>Crimping Tool</h4>
+                    <p>Alat untuk mengunci konektor RJ45 agar menancap kuat pada kabel UTP.</p>
+                </div>
+                <div class="tool-card">
+                    <i class="fa-solid fa-bolt"></i>
+                    <h4>LAN Tester</h4>
+                    <p>Alat penguji konektivitas untuk memastikan susunan kabel terhubung dengan benar.</p>
+                </div>
+                <div class="tool-card">
+                    <i class="fa-solid fa-pen-nib"></i>
+                    <h4>Kabel Stripper</h4>
+                    <p>Alat pengupas pelindung luar kabel UTP dengan presisi tinggi.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="cross">
+            <h2><i class="fa-solid fa-ethernet"></i> Cara Merangkai Kabel LAN Tipe Cross</h2>
+            <p>Kabel tipe <strong>Cross-Over</strong> digunakan untuk menghubungkan dua perangkat yang sejenis (contoh: PC ke PC, Switch ke Switch, Hub ke Hub). Pada kabel cross, ujung pertama menggunakan standar <strong>T568A</strong> dan ujung kedua menggunakan standar <strong>T568B</strong>.</p>
+            
+            <h3>Susunan Warna Kabel Cross:</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nomor Pin</th>
+                            <th>Ujung 1 (Standar T568A)</th>
+                            <th>Ujung 2 (Standar T568B)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Pin 1</td><td>Putih-Hijau</td><td>Putih-Oranye</td></tr>
+                        <tr><td>Pin 2</td><td>Hijau</td><td>Oranye</td></tr>
+                        <tr><td>Pin 3</td><td>Putih-Oranye</td><td>Putih-Hijau</td></tr>
+                        <tr><td>Pin 4</td><td>Biru</td><td>Biru</td></tr>
+                        <tr><td>Pin 5</td><td>Putih-Biru</td><td>Putih-Biru</td></tr>
+                        <tr><td>Pin 6</td><td>Oranye</td><td>Hijau</td></tr>
+                        <tr><td>Pin 7</td><td>Putih-Cokelat</td><td>Putih-Cokelat</td></tr>
+                        <tr><td>Pin 8</td><td>Cokelat</td><td>Cokelat</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>Langkah-langkah Pengerjaan:</h3>
+            <ol>
+                <li>Kupas kulit luar kabel UTP menggunakan kabel stripper sepanjang kurang lebih 2 cm.</li>
+                <li>Urai dan luruskan kabel-kabel di dalamnya, lalu susun warnanya sesuai urutan standar di atas.</li>
+                <li>Ratakan ujung kabel menggunakan pemotong pada tang crimping agar sama panjang.</li>
+                <li>Masukkan kabel secara perlahan ke dalam konektor RJ45 pastikan tembaga menyentuh ujung maksimal konektor.</li>
+                <li>Masukkan konektor RJ45 ke dalam tang crimping, lalu tekan dengan kuat hingga terdengar bunyi klik.</li>
+                <li>Uji hasil crimping menggunakan <strong>LAN Tester</strong>.</li>
+            </ol>
+        </section>
+
+        <section id="koneksi">
+            <h2><i class="fa-solid fa-laptop-code"></i> Menghubungkan 2 Laptop & Setting IP Address</h2>
+            <p>Setelah kabel Cross terpasang antar kedua laptop, lakukan konfigurasi IP Address manual (Static) agar kedua laptop dapat saling mengenali dalam satu jaringan lokal (LAN).</p>
+            
+            <h3>Konfigurasi Laptop 1:</h3>
+            <ul>
+                <li>Buka <strong>Control Panel</strong> &gt; <strong>Network and Sharing Center</strong> &gt; <strong>Change adapter settings</strong>.</li>
+                <li>Klik kanan pada <strong>Ethernet</strong>, pilih <strong>Properties</strong> &gt; <strong>Internet Protocol Version 4 (TCP/IPv4)</strong>.</li>
+                <li>Masukkan data IP Address:
+                    <ul>
+                        <li>IP Address: <code>192.168.1.1</code></li>
+                        <li>Subnet mask: <code>255.255.255.0</code></li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h3>Konfigurasi Laptop 2:</h3>
+            <ul>
+                <li>Lakukan langkah serupa pada laptop kedua dengan IP Address:
+                    <ul>
+                        <li>IP Address: <code>192.168.1.2</code></li>
+                        <li>Subnet mask: <code>255.255.255.0</code></li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h3>Pengujian Koneksi (Ping Test):</h3>
+            <p>Buka Command Prompt (CMD) di Laptop 1, lalu ketik perintah berikut:</p>
+            <div class="command-box">ping 192.168.1.2</div>
+        </section>
+
+        <section id="sharing">
+            <h2><i class="fa-solid fa-folder-open"></i> Cara Sharing File Menggunakan Win + Run</h2>
+            <p>Untuk berbagi file antar laptop yang terhubung dalam jaringan LAN:</p>
+            
+            <h3>Langkah 1: Pengaturan Sharing di Komputer Sumber (Host)</h3>
+            <ol>
+                <li>Klik kanan pada folder yang ingin di-share &gt; <strong>Properties</strong> &gt; tab <strong>Sharing</strong> &gt; <strong>Advanced Sharing</strong>.</li>
+                <li>Centang <strong>Share this folder</strong> &gt; klik <strong>Permissions</strong> &gt; centang <em>Full Control</em>.</li>
+                <li>Pastikan <em>Turn on file and printer sharing</em> aktif di Advanced Sharing Settings.</li>
+            </ol>
+
+            <h3>Langkah 2: Mengakses Folder di Komputer Tujuan</h3>
+            <ol>
+                <li>Tekan tombol <div class="command-box" style="display: inline-block; margin: 0; padding: 0.2rem 0.5rem;">Windows + R</div> pada laptop kedua.</li>
+                <li>Ketikkan IP address komputer sumber:</li>
+                <div class="command-box">\\192.168.1.1</div>
+                <li>Tekan <strong>Enter</strong> untuk membuka dan mengambil file.</li>
+            </ol>
+        </section>
+
+        <section id="video">
+            <h2><i class="fa-solid fa-video"></i> Video Tutorial Live Interaktif</h2>
+            
+            <h3>Video 1: Cara Merangkai Kabel LAN Tipe Cross</h3>
+            <div class="video-wrapper">
+                <iframe src="https://www.youtube.com/embed/zAco52qkTwE" title="Cara merangkai kabel LAN Tipe Cross" allowfullscreen></iframe>
+            </div>
+
+            <h3 style="margin-top: 2rem;">Video 2: Menghubungkan 2 Laptop & Sharing File via Run</h3>
+            <div class="video-wrapper">
+                <iframe src="https://www.youtube.com/embed/pd0n-dn0iTs" title="Cara Menghubungkan 2 laptop dan sharing file" allowfullscreen></iframe>
+            </div>
+        </section>
+
+        <section id="presentasi">
+            <h2><i class="fa-solid fa-file-powerpoint"></i> Slide Presentasi (PowerPoint)</h2>
+            <p>Anda dapat melihat pratinjau (*preview*) slide presentasi langsung di web melalui layanan Office Viewer atau mengunduhnya secara langsung.</p>
+            
+            <div class="presentation-actions">
+                <button class="btn" onclick="togglePreview()">
+                    <i class="fa-solid fa-eye"></i> Live Preview PPT
+                </button>
+                <a href="https://raw.githubusercontent.com/RafisyahRA15/Azka-ROG/main/presentasi.pptx" class="btn btn-secondary" download>
+                    <i class="fa-solid fa-download"></i> Download PPT
+                </a>
+            </div>
+
+            <iframe id="pptViewer" class="iframe-container" src="" title="Live Preview PowerPoint"></iframe>
+        </section>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2026 <span>Rafisyah Azka</span> | Kelas: <span>1-TIA</span> | NIM: <span>062640723211</span></p>
+        <p>Mata Kuliah Jaringan Komputer - Dosen Pengampu: <span>Dr. Ali Firdaus, S.Kom., M.Kom</span></p>
+    </footer>
+
+    <script>
+        function togglePreview() {
+            const viewer = document.getElementById('pptViewer');
+            const githubPptUrl = 'https://raw.githubusercontent.com/RafisyahRA15/Azka-ROG/main/presentasi.pptx';
+            const officeViewerUrl = `https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(githubPptUrl)}`;
+
+            if (viewer.classList.contains('active')) {
+                viewer.classList.remove('active');
+                viewer.src = '';
+            } else {
+                viewer.src = officeViewerUrl;
+                viewer.classList.add('active');
+                viewer.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+    </script>
+</body>
+</html>
